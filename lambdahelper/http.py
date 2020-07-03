@@ -32,8 +32,9 @@ def helper(handler):
     
     if len(ret) == 2 and isinstance(ret[0], int):
       http_response['statusCode'] = ret[0]
-      if ret[0] in _STATUS_CODE_PROCESSOR:
-        _STATUS_CODE_PROCESSOR[ret[0]](ret[0], ret[1])
+      processor = _STATUS_CODE_PROCESSOR.get(ret[0])
+      if processor:
+        processor(ret[0], ret[1])
         return http_response
       else:
         ret = ret[1]
